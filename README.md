@@ -10,6 +10,7 @@ A lightweight web tool for quickly generating OpenClaw configuration files.
 
 - 🎯 Supports multiple 3rd-party API providers (ollama, etc.)
 - 🔧 Customizable Base URL, provider, API mode, and model IDs
+- 🧩 Supports JSON5 input for Config, including comments and trailing commas
 - 📋 One-click copy of generated config JSON
 - 💻 No backend required — runs entirely in the browser
 - 🌐 Bilingual support (English / Chinese)
@@ -93,14 +94,14 @@ Then visit `http://localhost:8000`
 3. **Set API Mode** — select `anthropic-messages`, `openai-completions`, or others
 4. **Enter Model IDs** — add one or more model IDs, you can remove any you don't need
 5. **Enter API Key** — paste the token from your 3rd-party API provider
-6. **Paste Config** — paste your `~/.openclaw/openclaw.json` content
+6. **Paste Config** — paste your `~/.openclaw/openclaw.json` content in JSON or JSON5 format
 7. **Click Send** — generate the new configuration
 8. **Copy Result** — click the "Copy" button to copy the output to clipboard
 
 ## 🛠️ Tech Stack
 
 - Pure HTML + CSS + JavaScript
-- Zero external dependencies
+- Browser-side JSON5 parsing via CDN
 - Modern ES6+ syntax
 
 ## 📦 File Structure

@@ -185,6 +185,26 @@ providerSelect.addEventListener("change", () => {
 
 function setStatus(text) { statusEl.textContent = text; }
 
+function parseConfigInput(rawConfig) {
+  if (!rawConfig) {
+    throw new Error(t("err_no_config"));
+  }
+
+  if (window.JSON5 && typeof window.JSON5.parse === "function") {
+    try {
+      return window.JSON5.parse(rawConfig);
+    } catch (error) {
+      throw new Error(t("err_json_parse") + ": " + error.message);
+    }
+  }
+
+  try {
+    return JSON.parse(rawConfig);
+  } catch (error) {
+    throw new Error(t("err_json5_unavailable") + "\n" + t("err_json_parse") + ": " + error.message);
+  }
+}
+
 copyBtn.addEventListener("click", async () => {
   try {
     await navigator.clipboard.writeText(outputEl.textContent || "");
@@ -289,12 +309,7 @@ function processConfig(payload) {
     };
 
     // Step 3: Parse user's config
-    let userConfig;
-    try {
-      userConfig = JSON.parse(payload.config);
-    } catch (e) {
-      throw new Error(t("err_json_parse") + ": " + e.message);
-    }
+    const userConfig = parseConfigInput(payload.config);
 
     // Step 4: Merge everything (replace logic)
     const result = {

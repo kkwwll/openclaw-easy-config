@@ -125,8 +125,9 @@
       <label for="apikey" data-i18n="label_apikey">API Key</label>
       <input id="apikey" data-i18n-placeholder="placeholder_apikey" placeholder="请输入 apikey，请至第三方API站中的令牌管理处获取" />
 
-      <label for="config" data-i18n="label_config">Config (JSON/String)</label>
+      <label for="config" data-i18n="label_config">Config (JSON/JSON5/String)</label>
       <textarea id="config" data-i18n-placeholder="placeholder_config" placeholder="粘贴您的~/.openclaw/openclaw.json内容，或在您的openclaw的web控制台中的setting下的config选项卡中，切换为Raw模式找到"></textarea>
+      <div class="muted" data-i18n="config_hint">支持 JSON5 语法，例如注释、尾随逗号和单引号字符串。</div>
 
       <div class="actions">
         <button id="sendBtn" data-i18n="btn_send">发送</button>
@@ -141,6 +142,7 @@
   </div>
 
   <script src="lang.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/json5@2/dist/index.min.js"></script>
   <script src="script.js"></script>
   <script>
     setLang(currentLang);

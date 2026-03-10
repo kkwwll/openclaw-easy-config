@@ -10,6 +10,7 @@
 
 - 🎯 支持多个第三方 API 提供商（ollama 等）
 - 🔧 可自定义 Base URL、提供商、API 模式和多个模型 ID
+- 🧩 Config 输入支持 JSON5，包括注释、尾随逗号等语法
 - 📋 一键复制生成的配置 JSON
 - 💻 无需后端，纯前端实现
 - 🌐 支持中英文双语切换
@@ -93,14 +94,14 @@ php -S localhost:8000
 3. **配置 API 模式**：选择 `anthropic-messages`、`openai-completions` 或其他模式
 4. **输入模型 ID**：可添加多个模型 ID，不需要的可删除
 5. **输入 API Key**：填入从第三方 API 站获取的令牌
-6. **粘贴原配置**：粘贴您的 `~/.openclaw/openclaw.json` 内容
+6. **粘贴原配置**：粘贴您的 `~/.openclaw/openclaw.json` 内容，支持 JSON 或 JSON5 格式
 7. **点击发送**：生成新的配置文件
 8. **复制结果**：点击"复制"按钮将生成的配置复制到剪贴板
 
 ## 🛠️ 技术栈
 
 - 纯 HTML + CSS + JavaScript
-- 无任何外部依赖
+- 通过 CDN 在浏览器端解析 JSON5
 - 使用现代 ES6+ 语法
 
 ## 📦 文件结构
