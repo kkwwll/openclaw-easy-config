@@ -10,20 +10,16 @@ const providerBaseUrlMap = {
   "DeepSeek": "https://api.deepseek.com",
   "SiliconFlow": "https://api.siliconflow.cn",
   "ollama": "http://localhost:11434",
-  "milocode": "https://api.joyzhi.com",
-  "milocode-v1": "https://api.joyzhi.com/v1",
-  "duckcodingJP": "https://jp.duckcoding.com",
-  "duckcodingJP-v1": "https://jp.duckcoding.com/v1",
-  "FastRouter": "https://api-key.info",
-  "i7Relay": "https://i7dc.com/api"
+  "ephone": "https://api.ephone.chat",
+  "ephone-v1": "https://api.ephone.chat/v1"
 };
 
 const modelOptions = [
   "deepseek-chat",
   "deepseek-reasoner",
-  "claude-sonnet-4-5-20250929",
-  "claude-sonnet-4.5-agent",
-  "gpt-5.2",
+  "claude-sonnet-4-6",
+  "gpt-5.4",
+  "gpt-5.3-codex",
   "gpt-5-mini",
   "gemini-3-pro-preview"
 ];
