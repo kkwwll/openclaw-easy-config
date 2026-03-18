@@ -11,18 +11,23 @@ const providerBaseUrlMap = {
   "SiliconFlow": "https://api.siliconflow.cn",
   "ollama": "http://localhost:11434",
   "ephone": "https://api.ephone.chat",
-  "ephone-v1": "https://api.ephone.chat/v1"
+  "ephone-v1": "https://api.ephone.chat/v1",
+  "MiloCode": "https://api.joyzhi.com",
+  "MiloCode-v1": "https://api.joyzhi.com/v1"
 };
 
-const modelOptions = [
-  "deepseek-chat",
-  "deepseek-reasoner",
-  "claude-sonnet-4-6",
-  "gpt-5.4",
-  "gpt-5.3-codex",
-  "gpt-5-mini",
-  "gemini-3-pro-preview"
-];
+// Model to API mode mapping - ONLY MAINTAIN THIS!
+const modelApiModeMap = {
+  "deepseek-chat": "openai-completions",
+  "deepseek-reasoner": "openai-completions",
+  "claude-sonnet-4-6": "anthropic-messages",
+  "gpt-5.4": "openai-responses",
+  "gpt-5.3-codex": "openai-responses",
+  "gpt-5-mini": "openai-responses",
+  "gemini-3-pro-preview": "google-generative-ai"
+};
+
+const modelOptions = Object.keys(modelApiModeMap);
 
 // Dynamically populate provider select
 const providerSelect = document.getElementById("provider");
@@ -51,6 +56,21 @@ customBaseurlOption.value = "custom";
 customBaseurlOption.textContent = t("custom");
 baseurlSelect.appendChild(customBaseurlOption);
 
+// Dynamically populate apimode select
+const apimodeSelect = document.getElementById("apimode");
+apimodeSelect.innerHTML = "";
+const uniqueApiModes = [...new Set(Object.values(modelApiModeMap))];
+uniqueApiModes.forEach(mode => {
+  const option = document.createElement("option");
+  option.value = mode;
+  option.textContent = mode;
+  apimodeSelect.appendChild(option);
+});
+const customApimodeOption = document.createElement("option");
+customApimodeOption.value = "custom";
+customApimodeOption.textContent = t("custom");
+apimodeSelect.appendChild(customApimodeOption);
+
 // Handle custom input visibility
 const fields = ["baseurl", "provider", "apimode"];
 fields.forEach(field => {
@@ -72,6 +92,15 @@ function updateModelRemoveState() {
   removeButtons.forEach(btn => {
     btn.disabled = disableRemove;
   });
+}
+
+function syncApimodeWithModel(modelId) {
+  if (!modelId || !modelApiModeMap[modelId]) {
+    return;
+  }
+
+  apimodeSelect.value = modelApiModeMap[modelId];
+  document.getElementById("apimode_custom").classList.remove("show");
 }
 
 function createModelRow(initialValue) {
@@ -113,6 +142,7 @@ function createModelRow(initialValue) {
       customInput.classList.add("show");
     } else {
       customInput.classList.remove("show");
+      syncApimodeWithModel(select.value);
     }
   });
 
@@ -129,6 +159,7 @@ function createModelRow(initialValue) {
   if (initialValue) {
     if (modelOptions.includes(initialValue)) {
       select.value = initialValue;
+      syncApimodeWithModel(initialValue);
     } else {
       select.value = "custom";
       customInput.classList.add("show");
@@ -161,6 +192,7 @@ addModelBtn.addEventListener("click", () => {
 });
 
 createModelRow();
+syncApimodeWithModel(modelOptions[0]);
 
 // Bind provider to baseurl
 const baseurlCustom = document.getElementById("baseurl_custom");
